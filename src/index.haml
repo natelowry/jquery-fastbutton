@@ -1,4 +1,6 @@
 !!!
+- @bookrmarklet = "javascript:(function(){_my_script=document.createElement('SCRIPT');_my_script.type='text/javascript';_my_script.src='https://raw.github.com/x1024/jquery-fastbutton/master/bin/fastbutton.js';document.getElementsByTagName('head')[0].appendChild(_my_script);})();"
+
 %html
   %head
     <link href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.1.1/css/bootstrap-combined.min.css" rel="stylesheet">
@@ -11,7 +13,10 @@
   %body.container
     .hero-unit
       .page-header
-        %h1 Google Fastbutton. Zero config.<small>Also, working.</small>
+        %h1
+          <a href='https://github.com/x1024/jquery-fastbutton'>jQuery Fastbutton</a>.
+          Zero config.
+          <small>Also, working.</small>
       %p
         Most any Mobile Web Developer has heard of Google's seminal "Fastbutton" paper
         %a{ href: 'https://developers.google.com/mobile/articles/fast_buttons' }
@@ -57,25 +62,31 @@
             In fact, when used that way it breaks every single non-"fastclick"
             button or link on the page without notice.
           %li
-            It doesn't setup any useful defaults.
+            It doesn't provide any useful defaults.
             Not only does every link have to be setup separately,
-            but <em>every</em> link has to be setup separately.
+            but every type of link has to be setup manually.
           %li
             It sets up a different event listener for every element.
             On a site with hundreds of clickable links, this is undesirable.
-            Yeah, event listeners are cheap but come on.
-      %h2 Enter jQuery-fastbutton
+            Yeah, RAM is cheap but come on.
+      %h2 Enter <a href='https://github.com/x1024/jquery-fastbutton'>jQuery-fastbutton</a>
+      %p <a href='https://github.com/x1024/jquery-fastbutton'>jQuery-fastbutton</a> simplifies all this.
       %p
-        jQuery-fastbutton simplifies all this.
+        It provides decent defaults,
+        is initialized only once and
+        handles both currently existing and future links.
+        Also, it has fewer event listeners.
 
       %h3 Zero-config usage
       %p
         Just include this script:
         %br
-        TODO: SCRIPT URL HERE
+        %pre
+          :plain
+            &lt;script src='https://raw.github.com/x1024/jquery-fastbutton/master/bin/fastbutton.js'&gt;&lt;/script&gt;
         %br
 
-        This will do the following things:
+        %p This will do the following things:
         %ul
           %li
             All links will be fast-clickable.
@@ -104,6 +115,8 @@
 
       %p
         This includes both currently present and future links/inputs/submits
+      %p
+        Additionally, you can customize the https://github.com/x1024/jquery-fastbutton
 
       %h3 Customizable Usage
       %p
@@ -112,18 +125,21 @@
           <pre>$('a').fastButton(function(event) {
             alert("Now you're clicking with gas");
           })</pre>
+      %p
         Every place where you would normally write
         <code>$('...').live('click', ...)</code>,
         you can also write
         <code>$('...').fastButton('click', ...)</code>
-        Internally, jQuery-fastButton uses <code>$.fn.live</code>, so every place
+      %p
+        Internally, <a href='https://github.com/x1024/jquery-fastbutton'>jQuery-fastButton</a> uses <code>$.fn.live</code> so any place
         where you could <em>not</em> use <code>$('...').live</code>,
         you also won't be able to use <code>$('...').fastButton</code>
 
       %h3 Bookmark
       %p
-        If you so desire, you can instantly fastclick-ify any webpage by clicking on a bookmark.
-        TODO: BOOKMARK HERE
+        If you so desire, you can instantly fastclick-ify any webpage.
+        %a{ href: @bookmarklet } Just use this bookmarklet.
+        %pre= @bookmarklet
+
 
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
-    <script src='./fastbutton.js'></script>
