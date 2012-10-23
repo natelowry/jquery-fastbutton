@@ -1,5 +1,4 @@
 !!!
-- @bookrmarklet = "javascript:(function(){_my_script=document.createElement('SCRIPT');_my_script.type='text/javascript';_my_script.src='https://raw.github.com/x1024/jquery-fastbutton/master/bin/fastbutton.js';document.getElementsByTagName('head')[0].appendChild(_my_script);})();"
 
 %html
   %head
@@ -138,8 +137,13 @@
       %h3 Bookmark
       %p
         If you so desire, you can instantly fastclick-ify any webpage.
-        %a{ href: @bookmarklet } Just use this bookmarklet.
-        %pre= @bookmarklet
+        %a{ href: "javascript:(function(){_my_script=document.createElement('SCRIPT');_my_script.type='text/javascript';_my_script.src='https://raw.github.com/x1024/jquery-fastbutton/master/bin/fastbutton.js';document.getElementsByTagName('head')[0].appendChild(_my_script);})();" } Just use this bookmarklet.
+        %pre
+          javascript:(function(){_my_script=document.createElement('SCRIPT');_my_script.type='text/javascript';_my_script.src='https://raw.github.com/x1024/jquery-fastbutton/master/bin/fastbutton.js';document.getElementsByTagName('head')[0].appendChild(_my_script);})();
 
+      %br
+      %br
+      %h2 After all, speed is the biggest feature.
+      <iframe width="1050" height="788" src="http://www.youtube.com/embed/1bb5_AJFl_4" frameborder="0" allowfullscreen></iframe>
 
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
