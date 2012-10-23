@@ -1,11 +1,5 @@
 (function() {
   var Clickbuster, FastButton, clickDistance, clickbuster, clickbusterDistance, clickbusterTimeout;
-  var __indexOf = Array.prototype.indexOf || function(item) {
-    for (var i = 0, l = this.length; i < l; i++) {
-      if (this[i] === item) return i;
-    }
-    return -1;
-  };
   clickbusterDistance = 25;
   clickbusterTimeout = 2500;
   clickDistance = 10;
@@ -14,7 +8,7 @@
       var handlers, that;
       this.selector = selector;
       this.handler = handler;
-      if (!(__indexOf.call(window, "ontouchstart") >= 0)) {
+      if (!("ontouchstart" in window)) {
         return;
       }
       this.active = false;
@@ -88,7 +82,7 @@
     return Clickbuster;
   })();
   clickbuster = new Clickbuster();
-  if ((__indexOf.call(window, "ontouchstart") >= 0)) {
+  if ("ontouchstart" in window) {
     $(document).bind('click', clickbuster.onClick);
   }
   $.fn.extend({
@@ -96,7 +90,8 @@
       return new FastButton(this.selector, handler);
     }
   });
-  $('a[data-remote], .fastClick').fastButton(function(ev) {
+  $('.use-fastclick a[data-remote],\
+   .use-fastclick .fastClick').fastButton(function(ev) {
     var $this;
     ev.preventDefault();
     ev.stopPropagation();
@@ -104,7 +99,7 @@
     history.pushState(null, "Notes State", $this.attr('href'));
     return $this.trigger('click');
   });
-  $('a:not([data-remote])').fastButton(function(ev) {
+  $('.use-fastclick a:not([data-remote]):not(.fastClick)').fastButton(function(ev) {
     var $this, dispatch, target;
     ev.preventDefault();
     ev.stopPropagation();
@@ -118,11 +113,13 @@
       return this.dispatchEvent(dispatch);
     }
   });
-  $('.submit, input[type="submit"], button[type="submit"]').fastButton(function(ev) {
+  $('.use-fastclick .submit,\
+   .use-fastclick .input[type="submit"],\
+   .use-fastclick button[type="submit"]').fastButton(function(ev) {
     ev.preventDefault();
     return $(this).closest('form').trigger('submit');
   });
-  $('input[type="text"]').fastButton(function(ev) {
+  $('.use-fastclick input[type="text"]').fastButton(function(ev) {
     ev.preventDefault();
     $(this).trigger('focus');
     return false;

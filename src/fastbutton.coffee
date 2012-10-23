@@ -30,7 +30,7 @@ clickDistance = 10
 # Construct the FastButton with a reference to the element and click handler.
 class FastButton
   constructor: (@selector, @handler) ->
-    return unless ("ontouchstart" in window)
+    return unless ("ontouchstart" of window)
     # this.active == true if we're currently expecting a fastClick
     this.active = false
     that = this
@@ -98,7 +98,7 @@ class Clickbuster
         event.preventDefault()
 
 clickbuster = new Clickbuster()
-if ("ontouchstart" in window)
+if ("ontouchstart" of window)
   # Only setup event hanlders on mobile devices
   $(document).bind('click', clickbuster.onClick)
 
@@ -117,7 +117,8 @@ $.fn.extend
 # Handle remote links
 # This assumes the Rails convention that links with JS logic
 # will have data-remote=true
-$('a[data-remote], .fastClick').fastButton (ev) ->
+$('.use-fastclick a[data-remote],
+   .use-fastclick .fastClick').fastButton (ev) ->
   ev.preventDefault()
   ev.stopPropagation()
   $this = $(this)
@@ -125,7 +126,7 @@ $('a[data-remote], .fastClick').fastButton (ev) ->
   $this.trigger('click')
 
 # Handle normal links
-$('a:not([data-remote])').fastButton (ev) ->
+$('.use-fastclick a:not([data-remote]):not(.fastClick)').fastButton (ev) ->
   ev.preventDefault()
   ev.stopPropagation()
   $this = $(this)
@@ -144,13 +145,15 @@ $('a:not([data-remote])').fastButton (ev) ->
 
 # Submit all forms via ajax.
 # (Assumes all forms can be submitted via ajax)
-$('.submit, input[type="submit"], button[type="submit"]').fastButton (ev) ->
+$('.use-fastclick .submit,
+   .use-fastclick .input[type="submit"],
+   .use-fastclick button[type="submit"]').fastButton (ev) ->
   ev.preventDefault()
   $(this).closest('form').trigger('submit')
 
 # Quickly focus all input selectors
 # There doesn't need to be any JS associated with the input fields.
-$('input[type="text"]').fastButton (ev) ->
+$('.use-fastclick input[type="text"]').fastButton (ev) ->
   ev.preventDefault()
   $(this).trigger('focus')
   false
