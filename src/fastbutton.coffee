@@ -146,7 +146,7 @@ $('.use-fastclick a:not([data-remote]):not(.fastClick)').fastButton (ev) ->
 # Submit all forms via ajax.
 # (Assumes all forms can be submitted via ajax)
 $('.use-fastclick .submit,
-   .use-fastclick .input[type="submit"],
+   .use-fastclick input[type="submit"],
    .use-fastclick button[type="submit"]').fastButton (ev) ->
   ev.preventDefault()
   $(this).closest('form').trigger('submit')

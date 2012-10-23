@@ -114,7 +114,7 @@
     }
   });
   $('.use-fastclick .submit,\
-   .use-fastclick .input[type="submit"],\
+   .use-fastclick input[type="submit"],\
    .use-fastclick button[type="submit"]').fastButton(function(ev) {
     ev.preventDefault();
     return $(this).closest('form').trigger('submit');
