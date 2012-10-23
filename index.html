@@ -1,0 +1,146 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+  <head>
+    <link href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.1.1/css/bootstrap-combined.min.css" rel="stylesheet">
+    <style>
+      ul {
+        font-size: 18px;
+        line-height: 30px;
+      }
+    </style>
+  </head>
+  <body class='container'>
+    <div class='hero-unit'>
+      <div class='page-header'>
+        <h1>Google Fastbutton. Zero config.<small>Also, working.</small></h1>
+      </div>
+      <p>
+        Most any Mobile Web Developer has heard of Google's seminal "Fastbutton" paper
+        <a href='https://developers.google.com/mobile/articles/fast_buttons'>
+          https://developers.google.com/mobile/articles/fast_buttons
+        </a>
+      </p>
+      <p>
+        In this paper are detailed ways to make websites act and feel
+        as responsive as native apps -
+        <br />
+        a critical issue in the fight for the open web.
+      </p>
+      <h3>A bit of history</h3>
+      <p>
+        Due to several questionable design decisions,
+        the client-side speed of the mobile web was crippled.
+        <br />
+        No matter how skilled, developers could never hope to achieve
+        the same speed as native mobile apps -
+        <br />
+        Simulating "clicks" was artificially and purposefully delayed,
+        much to the annoyance of the user.
+        <br />
+        "The Google Paper" mostly solved this problem.
+        <br />
+        Mostly.
+      </p>
+      <h3>The current state of the art.</h3>
+      <p>
+        The following project
+        <br />
+        <a href='https://github.com/alexblack/google-fastbutton'>
+          https://github.com/alexblack/google-fastbutton
+        </a>
+        <br />
+        is an almost-exact copy of the Google code. In jQuery, the "fastclick"
+        event is exposed and it can be used as a normal jQuery event.
+        <br />
+        It works well enough but has the following problems:
+        <ul>
+          <li>
+            It requires that every "clicked" object be initialized separately.
+            If you ever forget one - tough luck.
+          </li>
+          <li>
+            It cannot be used with <em>$.fn.live</em>.
+            In fact, when used that way it breaks every single non-"fastclick"
+            button or link on the page without notice.
+          </li>
+          <li>
+            It doesn't setup any useful defaults.
+            Not only does every link have to be setup separately,
+            but <em>every</em> link has to be setup separately.
+          </li>
+          <li>
+            It sets up a different event listener for every element.
+            On a site with hundreds of clickable links, this is undesirable.
+            Yeah, event listeners are cheap but come on.
+          </li>
+        </ul>
+      </p>
+      <h2>Enter jQuery-fastbutton</h2>
+      <p>
+        jQuery-fastbutton simplifies all this.
+      </p>
+      <h3>Zero-config usage</h3>
+      <p>
+        Just include this script:
+        <br />
+        TODO: SCRIPT URL HERE
+        <br />
+        This will do the following things:
+        <ul>
+          <li>
+            All links will be fast-clickable.
+            <br />
+            <pre>&lt;a href='http://www.google.com'&gt;Google&lt;/a&gt;</pre>
+          </li>
+          <li>
+            All links that open in a new tab will be fast-clickable.
+            <br />
+            <pre>&lt;a href='http://www.google.com' target='_blank'&gt;Google&lt;/a&gt;</pre>
+          </li>
+          <li>
+            Text input fields will be fast-selectable.
+            <br />
+            <pre>&lt;input type='text' placeholder='click me'/&gt;</pre>
+          </li>
+          <li>
+            Forms will be fast-submittable.
+            (standard caveats apply)
+            <pre>&lt;input type='submit' value='submit me'/&gt;</pre>
+          </li>
+          <li>
+            All links that have the "fastClick" class will be fast-clickable.
+            <br />
+            <pre>&lt;a class="fastClick"&gt;I have a JS handler&lt;/a&gt;</pre>
+          </li>
+          <li>
+            All links that follow the Rails "data-remote" convention will be fast-clickable.
+            <br />
+            <pre>&lt;a data-remote='true'&gt;I have a JS handler, too&lt;/a&gt;</pre>
+          </li>
+        </ul>
+      </p>
+      <p>
+        This includes both currently present and future links/inputs/submits
+      </p>
+      <h3>Customizable Usage</h3>
+      <p>
+        Do this:
+        <pre>$('a').fastButton(function(event) {&#x000A;  alert("Now you're clicking with gas");&#x000A;})</pre>
+        Every place where you would normally write
+        <code>$('...').live('click', ...)</code>,
+        you can also write
+        <code>$('...').fastButton('click', ...)</code>
+        Internally, jQuery-fastButton uses <code>$.fn.live</code>, so every place
+        where you could <em>not</em> use <code>$('...').live</code>,
+        you also won't be able to use <code>$('...').fastButton</code>
+      </p>
+      <h3>Bookmark</h3>
+      <p>
+        If you so desire, you can instantly fastclick-ify any webpage by clicking on a bookmark.
+        TODO: BOOKMARK HERE
+      </p>
+    </div>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+    <script src='./bin/fastbutton.js'></script>
+  </body>
+</html>
