@@ -14,6 +14,8 @@
       .page-header
         %h1
           <a href='https://github.com/x1024/jquery-fastbutton'>jQuery Fastbutton</a>.
+        %h2
+          Unobtrusive.
           Zero config.
           <small>Also, working.</small>
       %p
@@ -21,10 +23,14 @@
         %a{ href: 'https://developers.google.com/mobile/articles/fast_buttons' }
           https://developers.google.com/mobile/articles/fast_buttons
       %p
-        In this paper are detailed ways to make websites act and feel
+        The paper details a way to make websites feel
         as responsive as native apps - 
         %br
         a critical issue in the fight for the open web.
+
+      %p
+        This jQuery plugin builds on top of that foundation
+        to make fast webabbs not only possible, but trivial.
 
       %h3 A bit of history
       %p
@@ -54,8 +60,11 @@
         It works well enough but has the following problems:
         %ul
           %li
+            It requires writing new code to support mobile - instead of "click",
+            developers must use the "fastClick" event.
+          %li
             It requires that every "clicked" object be initialized separately.
-            If you ever forget one - tough luck.
+            If you ever forget to initialize a single one - well, tough luck.
           %li
             It cannot be used with <em>$.fn.live</em>.
             In fact, when used that way it breaks every single non-"fastclick"
@@ -71,10 +80,13 @@
       %h2 Enter <a href='https://github.com/x1024/jquery-fastbutton'>jQuery-fastbutton</a>
       %p <a href='https://github.com/x1024/jquery-fastbutton'>jQuery-fastbutton</a> simplifies all this.
       %p
-        It provides decent defaults,
-        is initialized only once and
-        handles both currently existing and future links.
-        Also, it has fewer event listeners.
+        It...
+        %ul
+          %li is unobtrusive - no change to existing JS requried! 
+          %li provides decent defaults.
+          %li is initialized only once.
+          %li handles both currently existing and future links.
+          %li has fewer event listeners.
 
       %h3 Zero-config usage
       %p
@@ -84,6 +96,10 @@
           :plain
             &lt;script src='https://raw.github.com/x1024/jquery-fastbutton/master/bin/fastbutton.js'&gt;&lt;/script&gt;
         %br
+        And make sure your &lt;body&gt; tag looks like this:
+        %pre
+          :plain
+            &lt;body class='use-fastclick'&gt;
 
         %p This will do the following things:
         %ul
@@ -93,6 +109,7 @@
             %pre &lt;a href='http://www.google.com'&gt;Google&lt;/a&gt;
           %li
             All links that open in a new tab will be fast-clickable.
+            (standard caveats to opening tabs via JS apply)
             %br
             %pre &lt;a href='http://www.google.com' target='_blank'&gt;Google&lt;/a&gt;
           %li
@@ -101,7 +118,7 @@
             %pre &lt;input type='text' placeholder='click me'/&gt;
           %li
             Forms will be fast-submittable.
-            (standard caveats apply)
+            (standard caveats to submitting via JS apply)
             %pre &lt;input type='submit' value='submit me'/&gt;
           %li
             All links that have the "fastClick" class will be fast-clickable.
@@ -134,12 +151,32 @@
         where you could <em>not</em> use <code>$('...').live</code>,
         you also won't be able to use <code>$('...').fastButton</code>
 
-      %h3 Bookmark
+      %h3 Demo
       %p
-        If you so desire, you can instantly fastclick-ify any webpage.
-        %a{ href: "javascript:(function(){_my_script=document.createElement('SCRIPT');_my_script.type='text/javascript';_my_script.src='https://raw.github.com/x1024/jquery-fastbutton/master/bin/fastbutton.js';document.getElementsByTagName('head')[0].appendChild(_my_script);})();" } Just use this bookmarklet.
-        %pre
-          javascript:(function(){_my_script=document.createElement('SCRIPT');_my_script.type='text/javascript';_my_script.src='https://raw.github.com/x1024/jquery-fastbutton/master/bin/fastbutton.js';document.getElementsByTagName('head')[0].appendChild(_my_script);})();
+        Using a mobile device, try and tap on those buttons -
+        see how they have a delay.
+      .demo.no-fastclick
+        %a{ href: '#' }I am slow.
+        %br
+        %br
+        %input{ type: 'text', value: 'I am slow-focused' }
+        %br
+        %br
+        %form{ action: '/' }
+          %input{ type: 'submit', value: 'I am slow-submitted' }
+
+      %p
+        Then, try and tap on these.
+        Whoa. Yeah, I know.
+      .demo.use-fastclick
+        %a.fastClick{ href: '#' }I am fast.
+        %br
+        %br
+        %input{ type: 'text', value: 'I am fast-focused' }
+        %br
+        %br
+        %form{ action: '/' }
+          %input{ type: 'submit', value: 'I am fast-submitted' }
 
       %br
       %br
@@ -147,3 +184,16 @@
       <iframe width="420" height="315" src="http://www.youtube.com/embed/1bb5_AJFl_4" frameborder="0" allowfullscreen></iframe>
 
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+    /
+      <script src="https://raw.github.com/x1024/jquery-fastbutton/master/bin/fastbutton.js"></script>
+    <script src="./fastbutton.js"></script>
+    %script
+      :plain
+        $('.demo a').click(function() {
+          alert("You clicked me!");
+          return false;
+        });
+        $('.demo form').submit(function() {
+          alert("You submitted me!");
+          return false;
+        });
