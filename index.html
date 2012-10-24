@@ -235,15 +235,19 @@
     -->
     <script>
       $('.demo a').click(function() {
-        $btn = $(this).next();
-        clicks = parseInt($btn.data('clicks'), 10) + 1
-        $btn.text('You clicked ' + clicks + ' times')
+        var $btn = $(this).next();
+        var clicks = parseInt($btn.data('clicks'), 10) + 1;
+        $btn
+          .data('clicks', clicks)
+          .text('You clicked ' + clicks + ' times');
         return false;
       });
       $('.demo form').submit(function() {
-        $btn = $(this).next();
-        clicks = parseInt($btn.data('clicks'), 10) + 1
-        $btn.text('You submitted ' + clicks + ' times')
+        var $btn = $(this).next();
+        var clicks = parseInt($btn.data('clicks'), 10) + 1;
+        $btn
+          .data('clicks', clicks)
+          .text('You submitted ' + clicks + ' times');
         return false;
       });
     </script>
