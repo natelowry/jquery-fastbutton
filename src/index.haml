@@ -160,12 +160,12 @@
         %br
         %br
         %input{ type: 'text', value: 'I am slow-focused' }
-        %div{ 'data-clicks': 0 }
+        %div{ 'data-clicks' => 0 }
         %br
         %br
         %form{ action: '/' }
           %input{ type: 'submit', value: 'I am slow-submitted' }
-          %div{ 'data-clicks': 0 }
+          %div{ 'data-clicks' => 0 }
 
       %p
         Then, try and tap on these.
@@ -175,12 +175,12 @@
         %br
         %br
         %input{ type: 'text', value: 'I am fast-focused' }
-        %div{ 'data-clicks': 0 }
+        %div{ 'data-clicks' => 0 }
         %br
         %br
         %form{ action: '/' }
           %input{ type: 'submit', value: 'I am fast-submitted' }
-          %div{ 'data-clicks': 0 }
+          %div{ 'data-clicks' => 0 }
 
       %br
       %br
@@ -193,6 +193,7 @@
             Alerts don't work right -
             when an alert is fired in a "click" handler,
             all the touchstart/touchend/click events get jumbled up and bad things happen.
+            Don't use fastbuttons to show alerts.
           %li
             Scrolling requires extra attention - 
             Sometimes a user will attempt to "scroll" by dragging the screen, but will end up "clicking".
