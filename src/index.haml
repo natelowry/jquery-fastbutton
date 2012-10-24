@@ -157,30 +157,30 @@
         see how they have a delay.
       .demo.no-fastclick
         %a{ href: '#' }I am slow.
+        %div{ 'data-clicks' => 0 }
         %br
         %br
         %input{ type: 'text', value: 'I am slow-focused' }
-        %div{ 'data-clicks' => 0 }
         %br
         %br
         %form{ action: '/' }
           %input{ type: 'submit', value: 'I am slow-submitted' }
-          %div{ 'data-clicks' => 0 }
+        %div{ 'data-clicks' => 0 }
 
       %p
         Then, try and tap on these.
         Whoa. Yeah, I know.
       .demo.use-fastclick
         %a.fastClick{ href: '#' }I am fast.
+        %div{ 'data-clicks' => 0 }
         %br
         %br
         %input{ type: 'text', value: 'I am fast-focused' }
-        %div{ 'data-clicks' => 0 }
         %br
         %br
         %form{ action: '/' }
           %input{ type: 'submit', value: 'I am fast-submitted' }
-          %div{ 'data-clicks' => 0 }
+        %div{ 'data-clicks' => 0 }
 
       %br
       %br
@@ -215,12 +215,12 @@
         $('.demo a').click(function() {
           $btn = $(this).next();
           clicks = parseInt($btn.data('clicks'), 10) + 1
-          $btn.text("You clicked ' + clicks + ' times")
+          $btn.text('You clicked ' + clicks + ' times')
           return false;
         });
         $('.demo form').submit(function() {
           $btn = $(this).next();
           clicks = parseInt($btn.data('clicks'), 10) + 1
-          $btn.text("You submitted ' + clicks + ' times")
+          $btn.text('You submitted ' + clicks + ' times')
           return false;
         });
