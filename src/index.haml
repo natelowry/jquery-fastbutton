@@ -160,10 +160,12 @@
         %br
         %br
         %input{ type: 'text', value: 'I am slow-focused' }
+        %div{ 'data-clicks': 0 }
         %br
         %br
         %form{ action: '/' }
           %input{ type: 'submit', value: 'I am slow-submitted' }
+          %div{ 'data-clicks': 0 }
 
       %p
         Then, try and tap on these.
@@ -173,10 +175,30 @@
         %br
         %br
         %input{ type: 'text', value: 'I am fast-focused' }
+        %div{ 'data-clicks': 0 }
         %br
         %br
         %form{ action: '/' }
           %input{ type: 'submit', value: 'I am fast-submitted' }
+          %div{ 'data-clicks': 0 }
+
+      %br
+      %br
+      %h3 Caveats
+      %p
+        Be warned, while super fast buttons are awesome -
+        there are still some things to watch out for.
+        %ul
+          %li
+            Alerts don't work right -
+            when an alert is fired in a "click" handler,
+            all the touchstart/touchend/click events get jumbled up and bad things happen.
+          %li
+            Scrolling requires extra attention - 
+            Sometimes a user will attempt to "scroll" by dragging the screen, but will end up "clicking".
+            This is not a bug in the code, but rather just the way buttons work.
+            Still, you should leave enough whitespace on your page so people can drag that to scroll.
+
 
       %br
       %br
@@ -190,10 +212,14 @@
     %script
       :plain
         $('.demo a').click(function() {
-          alert("You clicked me!");
+          $btn = $(this).next();
+          clicks = parseInt($btn.data('clicks'), 10) + 1
+          $btn.text("You clicked {clicks} times")
           return false;
         });
         $('.demo form').submit(function() {
-          alert("You submitted me!");
+          $btn = $(this).next();
+          clicks = parseInt($btn.data('clicks'), 10) + 1
+          $btn.text("You submitted {clicks} times")
           return false;
         });
