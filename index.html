@@ -237,13 +237,13 @@
       $('.demo a').click(function() {
         $btn = $(this).next();
         clicks = parseInt($btn.data('clicks'), 10) + 1
-        $btn.text("You clicked ' + clicks + ' times")
+        $btn.text('You clicked ' + clicks + ' times')
         return false;
       });
       $('.demo form').submit(function() {
         $btn = $(this).next();
         clicks = parseInt($btn.data('clicks'), 10) + 1
-        $btn.text("You submitted ' + clicks + ' times")
+        $btn.text('You submitted ' + clicks + ' times')
         return false;
       });
     </script>
