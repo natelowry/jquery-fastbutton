@@ -96,7 +96,6 @@
     ev.preventDefault();
     ev.stopPropagation();
     $this = $(this);
-    history.pushState(null, "Notes State", $this.attr('href'));
     return $this.trigger('click');
   });
   $('.use-fastclick a:not([data-remote]):not(.fastClick)').fastButton(function(ev) {
