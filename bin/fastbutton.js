@@ -96,20 +96,19 @@
     ev.preventDefault();
     ev.stopPropagation();
     $this = $(this);
+    history.pushState(null, "Notes State", $this.attr('href'));
     return $this.trigger('click');
   });
   $('.use-fastclick a:not([data-remote]):not(.fastClick)').fastButton(function(ev) {
-    var $this, dispatch, target;
+    var $this, target;
     ev.preventDefault();
     ev.stopPropagation();
     $this = $(this);
-    target = $this.attr('target') || null;
-    if (target === null) {
+    target = $this.attr('target');
+    if (target === void 0) {
       return window.location = $this.attr('href');
     } else {
-      dispatch = document.createEvent("HTMLEvents");
-      dispatch.initEvent("click", true, true);
-      return this.dispatchEvent(dispatch);
+      return window.open(href, target);
     }
   });
   $('.use-fastclick .submit,\

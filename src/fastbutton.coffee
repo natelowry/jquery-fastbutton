@@ -130,18 +130,13 @@ $('.use-fastclick a:not([data-remote]):not(.fastClick)').fastButton (ev) ->
   ev.preventDefault()
   ev.stopPropagation()
   $this = $(this)
-  target = $this.attr('target') or null
+  target = $this.attr('target')
 
-  if target is null
+  if target is undefined
     # Open normal links... eh, normally
     window.location = $this.attr('href')
   else
-    # Links opened in new tabs require some special care on iOS.
-    # http://stackoverflow.com/questions/7930001
-    # Not tested on android, though.
-    dispatch = document.createEvent("HTMLEvents")
-    dispatch.initEvent("click", true, true)
-    this.dispatchEvent(dispatch)
+    window.open(href, target)
 
 # Submit all forms via ajax.
 # (Assumes all forms can be submitted via ajax)
