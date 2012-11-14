@@ -1,5 +1,5 @@
 (function() {
-  var Clickbuster, FastButton, clickDistance, clickbuster, clickbusterDistance, clickbusterTimeout;
+  var Clickbuster, FastButton, clickDistance, clickbusterDistance, clickbusterTimeout;
   clickbusterDistance = 25;
   clickbusterTimeout = 2500;
   clickDistance = 10;
@@ -73,6 +73,7 @@
       while (i < coordinates.length) {
         x = coordinates[i];
         y = coordinates[i + 1];
+        $('[data-clicks]').first().text("" + dx + ", " + dy + ", " + x + ", " + y + ", " + event.clientX + ", " + event.clientY);
         dx = Math.abs(event.clientX - x);
         dy = Math.abs(event.clientY - y);
         _results.push(dx < clickbusterDistance && dy < clickbusterDistance ? (event.stopPropagation(), event.preventDefault()) : void 0);
@@ -81,8 +82,8 @@
     };
     return Clickbuster;
   })();
-  clickbuster = new Clickbuster();
   if ("ontouchstart" in window) {
+    window.clickbuster = new Clickbuster();
     $(document).bind('click', clickbuster.onClick);
   }
   $.fn.extend({

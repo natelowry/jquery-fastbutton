@@ -91,14 +91,16 @@ class Clickbuster
     while i < coordinates.length
       x = coordinates[i]
       y = coordinates[i+1]
+      $('[data-clicks]').first()
+        .text("#{dx}, #{dy}, #{x}, #{y}, #{event.clientX}, #{event.clientY}")
       dx = Math.abs(event.clientX - x)
       dy = Math.abs(event.clientY - y)
       if dx < clickbusterDistance and dy < clickbusterDistance
         event.stopPropagation()
         event.preventDefault()
 
-clickbuster = new Clickbuster()
 if ("ontouchstart" of window)
+  window.clickbuster = new Clickbuster()
   # Only setup event hanlders on mobile devices
   $(document).bind('click', clickbuster.onClick)
 
