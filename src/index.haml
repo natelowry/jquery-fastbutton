@@ -24,7 +24,7 @@
           https://developers.google.com/mobile/articles/fast_buttons
       %p
         The paper details a way to make websites feel
-        as responsive as native apps - 
+        as responsive as native apps -
         %br
         a critical issue in the fight for the open web.
 
@@ -38,7 +38,7 @@
         the client-side speed of the mobile web was crippled.
         %br
         No matter how skilled, developers could never hope to achieve
-        the same speed as native mobile apps - 
+        the same speed as native mobile apps -
         %br
         Simulating "clicks" was artificially and purposefully delayed,
         much to the annoyance of the user.
@@ -82,7 +82,7 @@
       %p
         It...
         %ul
-          %li is unobtrusive - no change to existing JS requried! 
+          %li is unobtrusive - no change to existing JS requried!
           %li provides decent defaults.
           %li is initialized only once.
           %li handles both currently existing and future links.
@@ -195,7 +195,7 @@
             all the touchstart/touchend/click events get jumbled up and bad things happen.
             Don't use fastbuttons to show alerts.
           %li
-            Scrolling requires extra attention - 
+            Scrolling requires extra attention -
             Sometimes a user will attempt to "scroll" by dragging the screen, but will end up "clicking".
             This is not a bug in the code, but rather just the way buttons work.
             Still, you should leave enough whitespace on your page so people can drag that to scroll.
@@ -220,11 +220,13 @@
             .text('You clicked ' + clicks + ' times')
           return false;
         });
-        $('.demo form').submit(function() {
+        $('.demo form').click(function(ev) {
           var $btn = $(this).next();
           var clicks = parseInt($btn.data('clicks'), 10) + 1;
           $btn
             .data('clicks', clicks)
-            .text('You submitted ' + clicks + ' times')
+            .text('You submitted ' + clicks + ' times');
+          ev.preventDefault()
+        }).submit(function() {
           return false;
         });

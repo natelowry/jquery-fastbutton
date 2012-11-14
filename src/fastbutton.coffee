@@ -68,45 +68,53 @@ class FastButton
   # Invokes the actual click handler and prevents ghost clicks
   touchEnd: (event, element) ->
     return unless this.active
-
     event.preventDefault()
     this.active = false
-    return this.handler.call(element, event)
+
+    Clickbuster.preventGhostClick(this.startX, this.startY)
+    this.handler.call(element, event)
 
 class Clickbuster
-  constructor: ->
-    this.coordinates = []
+  @coordinates = []
 
-  preventGhostClick: (x, y) ->
-    this.coordinates.push(x, y)
-    window.setTimeout(clickbuster.pop, clickbusterDistance)
+  @preventGhostClick: (x, y) ->
+    Clickbuster.coordinates.push(x, y)
+    window.setTimeout(Clickbuster.pop, clickbusterTimeout)
 
-  pop: () ->
-    clickbuster.coordinates.splice(0, 2)
+  @pop: () ->
+    Clickbuster.coordinates.splice(0, 2)
 
   # If we catch a click event inside the given radius and time threshold,
   # that event will be considered a ghost click (and will be ignored).
-  onClick: (event) ->
-    coordinates = clickbuster.coordinates
+  @onClick: (event) ->
+    coordinates = Clickbuster.coordinates
+    i = 0
+    return true unless event.clientX?
+
+    window.ev = event
     while i < coordinates.length
       x = coordinates[i]
       y = coordinates[i+1]
-      $('[data-clicks]').first()
-        .text("#{dx}, #{dy}, #{x}, #{y}, #{event.clientX}, #{event.clientY}")
       dx = Math.abs(event.clientX - x)
       dy = Math.abs(event.clientY - y)
-      if dx < clickbusterDistance and dy < clickbusterDistance
-        event.stopPropagation()
-        event.preventDefault()
+      i += 2
 
-if ("ontouchstart" of window)
-  window.clickbuster = new Clickbuster()
-  # Only setup event hanlders on mobile devices
-  $(document).bind('click', clickbuster.onClick)
+      if dx < clickbusterDistance and dy < clickbusterDistance
+        return false
+    return true
 
 ##################
 # jQuery binding #
 ##################
+
+eventHandler = (handleObj) ->
+  origHandler = handleObj.handler
+  handleObj.handler = (event) ->
+    return false unless Clickbuster.onClick(event)
+    origHandler.apply( this, arguments )
+
+$.event.special.click = { add: eventHandler }
+$.event.special.submit = { add: eventHandler }
 
 $.fn.extend
   fastButton: (handler) ->
@@ -121,16 +129,11 @@ $.fn.extend
 # will have data-remote=true
 $('.use-fastclick a[data-remote],
    .use-fastclick .fastClick').fastButton (ev) ->
-  ev.preventDefault()
-  ev.stopPropagation()
-  $this = $(this)
-  history.pushState(null, "Notes State", $this.attr('href'))
-  $this.trigger('click')
+  $(this).trigger('click')
+  false
 
 # Handle normal links
 $('.use-fastclick a:not([data-remote]):not(.fastClick)').fastButton (ev) ->
-  ev.preventDefault()
-  ev.stopPropagation()
   $this = $(this)
   target = $this.attr('target')
 
@@ -139,14 +142,15 @@ $('.use-fastclick a:not([data-remote]):not(.fastClick)').fastButton (ev) ->
     window.location = $this.attr('href')
   else
     window.open(href, target)
+  false
 
 # Submit all forms via ajax.
 # (Assumes all forms can be submitted via ajax)
 $('.use-fastclick .submit,
    .use-fastclick input[type="submit"],
    .use-fastclick button[type="submit"]').fastButton (ev) ->
-  ev.preventDefault()
-  $(this).closest('form').trigger('submit')
+  $(this).closest('form').trigger('click')
+  false
 
 # Quickly focus all input selectors
 # There doesn't need to be any JS associated with the input fields.

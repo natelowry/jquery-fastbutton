@@ -1,5 +1,5 @@
 (function() {
-  var Clickbuster, FastButton, clickDistance, clickbusterDistance, clickbusterTimeout;
+  var Clickbuster, FastButton, clickDistance, clickbusterDistance, clickbusterTimeout, eventHandler;
   clickbusterDistance = 25;
   clickbusterTimeout = 2500;
   clickDistance = 10;
@@ -51,41 +51,59 @@
       }
       event.preventDefault();
       this.active = false;
+      Clickbuster.preventGhostClick(this.startX, this.startY);
       return this.handler.call(element, event);
     };
     return FastButton;
   })();
   Clickbuster = (function() {
-    function Clickbuster() {
-      this.coordinates = [];
-    }
-    Clickbuster.prototype.preventGhostClick = function(x, y) {
-      this.coordinates.push(x, y);
-      return window.setTimeout(clickbuster.pop, clickbusterDistance);
+    function Clickbuster() {}
+    Clickbuster.coordinates = [];
+    Clickbuster.preventGhostClick = function(x, y) {
+      Clickbuster.coordinates.push(x, y);
+      return window.setTimeout(Clickbuster.pop, clickbusterTimeout);
     };
-    Clickbuster.prototype.pop = function() {
-      return clickbuster.coordinates.splice(0, 2);
+    Clickbuster.pop = function() {
+      return Clickbuster.coordinates.splice(0, 2);
     };
-    Clickbuster.prototype.onClick = function(event) {
-      var coordinates, dx, dy, x, y, _results;
-      coordinates = clickbuster.coordinates;
-      _results = [];
+    Clickbuster.onClick = function(event) {
+      var coordinates, dx, dy, i, x, y;
+      coordinates = Clickbuster.coordinates;
+      i = 0;
+      if (event.clientX == null) {
+        return true;
+      }
+      window.ev = event;
       while (i < coordinates.length) {
         x = coordinates[i];
         y = coordinates[i + 1];
-        $('[data-clicks]').first().text("" + dx + ", " + dy + ", " + x + ", " + y + ", " + event.clientX + ", " + event.clientY);
         dx = Math.abs(event.clientX - x);
         dy = Math.abs(event.clientY - y);
-        _results.push(dx < clickbusterDistance && dy < clickbusterDistance ? (event.stopPropagation(), event.preventDefault()) : void 0);
+        i += 2;
+        if (dx < clickbusterDistance && dy < clickbusterDistance) {
+          return false;
+        }
       }
-      return _results;
+      return true;
     };
     return Clickbuster;
   })();
-  if ("ontouchstart" in window) {
-    window.clickbuster = new Clickbuster();
-    $(document).bind('click', clickbuster.onClick);
-  }
+  eventHandler = function(handleObj) {
+    var origHandler;
+    origHandler = handleObj.handler;
+    return handleObj.handler = function(event) {
+      if (!Clickbuster.onClick(event)) {
+        return false;
+      }
+      return origHandler.apply(this, arguments);
+    };
+  };
+  $.event.special.click = {
+    add: eventHandler
+  };
+  $.event.special.submit = {
+    add: eventHandler
+  };
   $.fn.extend({
     fastButton: function(handler) {
       return new FastButton(this.selector, handler);
@@ -93,30 +111,25 @@
   });
   $('.use-fastclick a[data-remote],\
    .use-fastclick .fastClick').fastButton(function(ev) {
-    var $this;
-    ev.preventDefault();
-    ev.stopPropagation();
-    $this = $(this);
-    history.pushState(null, "Notes State", $this.attr('href'));
-    return $this.trigger('click');
+    $(this).trigger('click');
+    return false;
   });
   $('.use-fastclick a:not([data-remote]):not(.fastClick)').fastButton(function(ev) {
     var $this, target;
-    ev.preventDefault();
-    ev.stopPropagation();
     $this = $(this);
     target = $this.attr('target');
     if (target === void 0) {
-      return window.location = $this.attr('href');
+      window.location = $this.attr('href');
     } else {
-      return window.open(href, target);
+      window.open(href, target);
     }
+    return false;
   });
   $('.use-fastclick .submit,\
    .use-fastclick input[type="submit"],\
    .use-fastclick button[type="submit"]').fastButton(function(ev) {
-    ev.preventDefault();
-    return $(this).closest('form').trigger('submit');
+    $(this).closest('form').trigger('click');
+    return false;
   });
   $('.use-fastclick input[type="text"]').fastButton(function(ev) {
     ev.preventDefault();
