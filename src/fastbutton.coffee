@@ -27,6 +27,9 @@ clickDistance = 10
 # T3h codez #
 #############
 
+unless window.debug?
+  debug = (arg) -> console.log(arg)
+
 # Construct the FastButton with a reference to the element and click handler.
 class FastButton
   constructor: (@selector, @handler) ->
@@ -136,10 +139,11 @@ $('.use-fastclick a[data-remote],
 $('.use-fastclick a:not([data-remote]):not(.fastClick)').fastButton (ev) ->
   $this = $(this)
   target = $this.attr('target')
+  href = $this.attr('href')
 
   if target is undefined
     # Open normal links... eh, normally
-    window.location = $this.attr('href')
+    window.location = href
   else
     window.open(href, target)
   false

@@ -115,11 +115,12 @@
     return false;
   });
   $('.use-fastclick a:not([data-remote]):not(.fastClick)').fastButton(function(ev) {
-    var $this, target;
+    var $this, target, href;
     $this = $(this);
     target = $this.attr('target');
+    href = $this.attr('href');
     if (target === void 0) {
-      window.location = $this.attr('href');
+      window.location = href;
     } else {
       window.open(href, target);
     }
