@@ -74,7 +74,7 @@
             If you ever forget to initialize a single one - well, tough luck.
           </li>
           <li>
-            It cannot be used with <em>$.fn.live</em>.
+          It cannot be used with <em>$.fn.on</em>(or <em>$.fn.live</em>).
             In fact, when used that way it breaks every single non-"fastclick"
             button or link on the page without notice.
           </li>
@@ -158,13 +158,13 @@
       </p>
       <p>
         Every place where you would normally write
-        <code>$('...').live('click', ...)</code>,
+        <code>$(document).on('...', 'click', ...)</code>,
         you can also write
         <code>$('...').fastButton('click', ...)</code>
       </p>
       <p>
-        Internally, <a href='https://github.com/x1024/jquery-fastbutton'>jQuery-fastButton</a> uses <code>$.fn.live</code> so any place
-        where you could <em>not</em> use <code>$('...').live</code>,
+        Internally, <a href='https://github.com/x1024/jquery-fastbutton'>jQuery-fastButton</a> uses <code>$.fn.on</code> so any place
+        where you could <em>not</em> use <code>$('...').on</code>(previously used as <code>$('...').live</code> or <code>$('...').delegate</code>),
         you also won't be able to use <code>$('...').fastButton</code>
       </p>
       <h3>Demo</h3>
