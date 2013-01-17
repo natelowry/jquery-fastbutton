@@ -27,6 +27,7 @@ clickDistance = 10
 # T3h codez #
 #############
 
+
 unless window.debug?
   debug = (arg) -> console.log(arg)
 
@@ -121,7 +122,12 @@ $.event.special.submit = { add: eventHandler }
 
 $.fn.extend
   fastButton: (handler) ->
-    new FastButton(this.selector, handler)
+    # Works with jQuery <1.9
+    $.fastButton(this.selector, handler)
+
+$.extend
+  fastButton: (selector, handler) ->
+    new FastButton(selector, handler)
 
 ########################
 # Zero-config defaults #
@@ -130,13 +136,13 @@ $.fn.extend
 # Handle remote links
 # This assumes the Rails convention that links with JS logic
 # will have data-remote=true
-$('.use-fastclick a[data-remote],
-   .use-fastclick .fastClick').fastButton (ev) ->
+$.fastButton '.use-fastclick a[data-remote],
+   .use-fastclick .fastClick', (ev) ->
   $(this).trigger('click')
   false
 
 # Handle normal links
-$('.use-fastclick a:not([data-remote]):not(.fastClick)').fastButton (ev) ->
+$.fastButton '.use-fastclick a:not([data-remote]):not(.fastClick)', (ev) ->
   $this = $(this)
   target = $this.attr('target')
   href = $this.attr('href')
@@ -150,15 +156,15 @@ $('.use-fastclick a:not([data-remote]):not(.fastClick)').fastButton (ev) ->
 
 # Submit all forms via ajax.
 # (Assumes all forms can be submitted via ajax)
-$('.use-fastclick .submit,
+$.fastButton '.use-fastclick .submit,
    .use-fastclick input[type="submit"],
-   .use-fastclick button[type="submit"]').fastButton (ev) ->
+   .use-fastclick button[type="submit"]', (ev) ->
   $(this).closest('form').trigger('click')
   false
 
 # Quickly focus all input selectors
 # There doesn't need to be any JS associated with the input fields.
-$('.use-fastclick input[type="text"]').fastButton (ev) ->
+$.fastButton '.use-fastclick input[type="text"]', (ev) ->
   ev.preventDefault()
   $(this).trigger('focus')
   false
