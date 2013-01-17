@@ -1,0 +1,38 @@
+{
+  "name": "fastbutton",
+  "title": "jQuery Fastbutton",
+  "description": "An unobtrusive library that removes the 300ms delay from click-related actions in mobile websites. Provides zero-configuration defaults that work out-of-the-box on existing sites.",
+  "keywords": [
+    "performance",
+    "mobile",
+    "touch",
+    "fastbutton"
+  ],
+  "version": "1.0.0",
+  "author": {
+    "name": "Mihail Minkov",
+    "url": "https://github.com/x1024",
+    "email": "Mihail.Minkov.BG@gmail.com"
+  },
+  "maintainers": [
+    {
+      "name": "Mihail Minkov",
+      "url": "https://github.com/x1024",
+      "email": "Mihail.Minkov.BG@gmail.com"
+    }
+  ],
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "https://raw.github.com/x1024/jquery-fastbutton/master/MIT-LICENSE.txt"
+    }
+  ],
+  "bugs": "http://github.com/x1024/jquery-fastbutton/issues",
+  "homepage": "http://x1024.github.com/jquery-fastbutton",
+  "docs": "http://x1024.github.com/jquery-fastbutton",
+  "demo": "http://x1024.github.com/jquery-fastbutton",
+  "download": "https://github.com/x1024/jquery-fastbutton",
+  "dependencies": {
+    "jquery": ">=1.5 <1.9"
+  }
+}
