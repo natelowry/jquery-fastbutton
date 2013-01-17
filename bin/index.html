@@ -2,6 +2,8 @@
 <html>
   <head>
     <link href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.1.1/css/bootstrap-combined.min.css" rel="stylesheet">
+    <meta content='width=device-width; initial-scale=1.0; maximum-scale=1.0; minimum-scale=1.0; user-scalable=0;' name='viewport' />
+
     <style>
       ul {
         font-size: 18px;
@@ -154,17 +156,23 @@
       <h3>Customizable Usage</h3>
       <p>
         Do this:
-        <pre>$('a').fastButton(function(event) {&#x000A;  alert("Now you're clicking with gas");&#x000A;})</pre>
+        (works in jQuery <=1.8)
+      </p>
+      <pre>$('a').fastButton(function(event) {&#x000A;  alert("Now you're clicking with gas");&#x000A;})</pre>
+      <p>
+        Or this:
+        (works in jQuery <=jQuery 1.9)
+        <pre>$.fastButton('a', function(event) {&#x000A;  alert("Now you're clicking with gas");&#x000A;})</pre>
       </p>
       <p>
         Every place where you would normally write
-        <code>$('...').live('click', ...)</code>,
+        <code>$(document).on('...', 'click', function() { ... })</code>,
         you can also write
-        <code>$('...').fastButton('click', ...)</code>
+        <code>$('...').fastButton(function() { ... })</code>
       </p>
       <p>
-        Internally, <a href='https://github.com/x1024/jquery-fastbutton'>jQuery-fastButton</a> uses <code>$.fn.live</code> so any place
-        where you could <em>not</em> use <code>$('...').live</code>,
+        Internally, <a href='https://github.com/x1024/jquery-fastbutton'>jQuery-fastButton</a> uses <code>$.fn.on</code> so any place
+        where you could <em>not</em> use <code>$('...').on</code>(previously used as <code>$('...').live</code> or <code>$('...').delegate</code>),
         you also won't be able to use <code>$('...').fastButton</code>
       </p>
       <h3>Demo</h3>
@@ -229,10 +237,7 @@
       <iframe width="420" height="315" src="http://www.youtube.com/embed/1bb5_AJFl_4" frameborder="0" allowfullscreen></iframe>
     </div>
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
-    <!--
-      <script src="https://raw.github.com/x1024/jquery-fastbutton/master/bin/fastbutton.js"></script>
-    -->
-    <script src="./fastbutton.js"></script>
+    <script src="https://raw.github.com/x1024/jquery-fastbutton/master/bin/fastbutton.js"></script>
     <script>
       $('.demo a').click(function() {
         var $btn = $(this).next();
