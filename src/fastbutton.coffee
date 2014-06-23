@@ -61,7 +61,11 @@ class FastButton
   touchMove: (event) ->
     return unless this.active
 
-    touch = event.originalEvent.touches[0]
+    if event.originalEvent?
+      touch = event.originalEvent.touches[0]
+    else
+      touch = event.touches[0]
+      
     dx = Math.abs(touch.clientX - this.startX)
     dy = Math.abs(touch.clientY - this.startY)
 
