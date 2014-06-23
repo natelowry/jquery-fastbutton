@@ -52,7 +52,11 @@
       if (!this.active) {
         return;
       }
-      touch = event.originalEvent.touches[0];
+      if (event.originalEvent != null) {
+        touch = event.originalEvent.touches[0];
+      } else {
+        touch = event.touches[0];
+      }
       dx = Math.abs(touch.clientX - this.startX);
       dy = Math.abs(touch.clientY - this.startY);
       if (dx > clickDistance || dy > clickDistance) {
